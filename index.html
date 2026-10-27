@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paardenkleuren &amp; erfelijkheid</title>
+  <meta name="description" content="Interactieve kruisingssimulator voor vachtkleuren bij paarden (Extension, Agouti, Cream).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/masks.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Erfelijkheidsleer · vachtkleur</div>
+      <h1>Paardenkleuren &amp; erfelijkheid</h1>
+      <p class="lede">Kies een merrie en een hengst en zie welke kleuren hun veulen kan krijgen, met de kans per kleur. Drie genen bepalen hier de vachtkleur: Extension, Agouti en Cream.</p>
+    </div>
+    <div class="genes" aria-label="Genen in dit model">
+      <div class="gene-tag"><b>E/e</b> Extension · zwart of rood</div>
+      <div class="gene-tag"><b>A/a</b> Agouti · waar zit het zwart</div>
+      <div class="gene-tag"><b>CR/cr</b> Cream · verdunning</div>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-ouders">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Stap 1</div>
+        <h2 id="h-ouders">Kies de ouders</h2>
+        <p>Kies eerst een kleur. Daaronder staan alle genotypen die die kleur geven; kies het genotype dat je wilt kruisen.</p>
+      </div>
+      <button class="btn" id="random">Willekeurige ouders</button>
+    </div>
+    <div class="parents" style="margin-top:18px">
+      <article class="parent mare" id="p-mare"></article>
+      <div class="cross" aria-hidden="true">×</div>
+      <article class="parent stallion" id="p-stallion"></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-veulens">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Stap 2</div>
+        <h2 id="h-veulens">Mogelijke veulens</h2>
+        <p id="foal-sub">Elk gen wordt onafhankelijk doorgegeven. Samen geeft dat 4 × 4 × 4 = 64 even waarschijnlijke combinaties.</p>
+      </div>
+    </div>
+    <div class="bar" id="bar" role="img"></div>
+    <div class="foals" id="foals"></div>
+  </section>
+
+  <section class="learn" aria-labelledby="h-uitleg">
+    <div>
+      <div class="eyebrow">Zo werkt het</div>
+      <h2 id="h-uitleg">Drie genen, één vachtkleur</h2>
+      <p class="lede" style="margin-top:6px">Elk paard heeft van ieder gen twee kopieën (allelen): één van de merrie, één van de hengst. Welke combinatie het veulen krijgt, bepaalt het uiterlijk (fenotype).</p>
+    </div>
+    <div class="gene-cols">
+      <div class="gcol">
+        <div class="k"><b>E</b><h3>Extension</h3><small>MC1R</small></div>
+        <p>Bepaalt of het paard zwart pigment kan maken.</p>
+        <ul>
+          <li><b>E</b> is dominant: zwart pigment is mogelijk.</li>
+          <li><b>ee</b>: alleen rood pigment. Het paard is altijd een <b>vos</b>.</li>
+        </ul>
+        <p class="foot">Zonder minstens één E kan een paard niet zwart of bruin zijn.</p>
+      </div>
+      <div class="gcol">
+        <div class="k"><b>A</b><h3>Agouti</h3><small>ASIP</small></div>
+        <p>Bepaalt waar het zwarte pigment zit. Alleen zichtbaar als er een E is.</p>
+        <ul>
+          <li><b>A</b> is dominant: zwart alleen in manen, staart en onderbenen. Het paard is <b>bruin</b>.</li>
+          <li><b>aa</b>: zwart over het hele lichaam. Het paard is <b>zwart</b>.</li>
+        </ul>
+        <p class="foot">Een vos kan A of a dragen zonder dat je het ziet. Het komt pas bij de veulens naar boven.</p>
+      </div>
+      <div class="gcol">
+        <div class="k"><b>CR</b><h3>Cream</h3><small>SLC45A2</small></div>
+        <p>Verdunt rood pigment sterk en zwart pigment nauwelijks. Onvolledig dominant.</p>
+        <ul>
+          <li><b>1× CR</b>: vos wordt <b>palomino</b>, bruin wordt <b>valk</b>, zwart wordt <b>smoky black</b>.</li>
+          <li><b>2× CR</b>: <b>cremello</b>, <b>perlino</b> of <b>smoky cream</b>, met roze huid en blauwe ogen.</li>
+        </ul>
+        <p class="foot">Eén of twee kopieën geven een verschillend uiterlijk. Dat is onvolledige dominantie.</p>
+      </div>
+    </div>
+
+    <div class="punnett-box">
+      <div>
+        <h3>Punnett-vierkant per gen</h3>
+        <p class="pexp">Het vierkant gebruikt de genotypen van de ouders hierboven. Langs de rand staan de geslachtscellen; elk vakje heeft 25% kans.</p>
+        <div class="tabs" role="tablist" id="ptabs">
+          <button role="tab" data-g="e" aria-selected="true">Extension</button>
+          <button role="tab" data-g="a" aria-selected="false">Agouti</button>
+          <button role="tab" data-g="c" aria-selected="false">Cream</button>
+        </div>
+        <p class="pexp" id="pexp"></p>
+        <div class="dist" id="pdist"></div>
+      </div>
+      <div class="pgrid-wrap"><div class="pgrid" id="pgrid"></div></div>
+    </div>
+  </section>
+
+  <footer class="note">
+    Vereenvoudigd model met drie genen. Andere genen zoals schimmel (G), vaal (dun), zilver, champagne en bonte patronen zijn niet meegenomen; die kunnen het uiterlijk sterk veranderen. Kleurnamen volgen het Nederlandse spraakgebruik, met de Engelse naam erbij.
+  </footer>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
